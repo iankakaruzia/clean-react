@@ -4,7 +4,7 @@ import Styles from './login-styles.scss'
 import { Footer, LoginHeader, Input, FormStatus } from '@/presentation/components'
 import Context from '@/presentation/context/form/form-context'
 import { Validation } from '@/presentation/protocols/validation'
-import { Authentication } from '@/domain/usecases/authentication'
+import { Authentication } from '@/domain/usecases'
 
 type Props = {
   validation: Validation
