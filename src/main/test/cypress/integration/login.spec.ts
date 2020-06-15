@@ -42,11 +42,9 @@ describe('Login', () => {
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
 
-  it('Should present UnexpectedError on 400', () => {
+  it('Should present UnexpectedError on default error cases', () => {
     Http.mockUnexpectedError()
-    cy.getByTestId('email').focus().type(faker.internet.email())
-    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(6))
-    cy.getByTestId('submit').click()
+    simulateValidSubmit()
     FormHelper.testMainError('Algo de errado aconteceu. Tente novamente em breve.')
     FormHelper.testUrl('/login')
   })
