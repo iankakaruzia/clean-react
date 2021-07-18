@@ -17,7 +17,10 @@ describe('LocalStorageAdapter', () => {
     const value = faker.random.objectElement<{}>()
     sut.set(key, value)
 
-    expect(localStorage.setItem).toHaveBeenCalledWith(key, JSON.stringify(value))
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      key,
+      JSON.stringify(value)
+    )
   })
 
   test('Should call localStorage.removeItem if value is null', () => {
@@ -32,7 +35,9 @@ describe('LocalStorageAdapter', () => {
     const sut = makeSut()
     const key = faker.database.column()
     const value = faker.random.objectElement<{}>()
-    const getItemSpy = jest.spyOn(localStorage, 'getItem').mockReturnValueOnce(JSON.stringify(value))
+    const getItemSpy = jest
+      .spyOn(localStorage, 'getItem')
+      .mockReturnValueOnce(JSON.stringify(value))
     const obj = sut.get(key)
 
     expect(obj).toEqual(value)

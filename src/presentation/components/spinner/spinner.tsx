@@ -10,7 +10,10 @@ const Spinner: React.FC<Props> = (props: Props) => {
       data-testid='spinner'
       className={[Styles.spinner, props.className].join(' ')}
     >
-      <div /><div /><div /><div />
+      <div />
+      <div />
+      <div />
+      <div />
     </div>
   )
 }

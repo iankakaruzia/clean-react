@@ -6,7 +6,7 @@ export class AddAccountSpy implements AddAccount {
   callsCount = 0
   params: AddAccount.Params
 
-  async add (params: AddAccount.Params): Promise<AddAccount.Model> {
+  async add(params: AddAccount.Params): Promise<AddAccount.Model> {
     this.params = params
     this.callsCount++
     return this.account

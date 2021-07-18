@@ -2,7 +2,10 @@ import React, { useContext, useRef } from 'react'
 import Styles from './input-styles.scss'
 import Context from '@/presentation/context/form/form-context'
 
-type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+type Props = React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>
 
 const Input: React.FC<Props> = (props: Props) => {
   const { state, setState } = useContext(Context)
@@ -19,16 +22,22 @@ const Input: React.FC<Props> = (props: Props) => {
         {...props}
         ref={inputRef}
         title={error}
-        placeholder=" "
+        placeholder=' '
         data-testid={props.name}
         readOnly
-        onFocus={event => { event.target.readOnly = false }}
-        onChange={event => { setState({ ...state, [event.target.name]: event.target.value }) }}
+        onFocus={(event) => {
+          event.target.readOnly = false
+        }}
+        onChange={(event) => {
+          setState({ ...state, [event.target.name]: event.target.value })
+        }}
       />
       <label
         data-testid={`${props.name}-label`}
         title={error}
-        onClick={() => { inputRef.current.focus() }}
+        onClick={() => {
+          inputRef.current.focus()
+        }}
       >
         {props.placeholder}
       </label>

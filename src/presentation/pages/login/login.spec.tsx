@@ -28,10 +28,7 @@ const makeSut = (params?: SutParams): SutTypes => {
   render(
     <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
       <Router history={history}>
-        <Login
-          validation={validationStub}
-          authentication={authenticationSpy}
-        />
+        <Login validation={validationStub} authentication={authenticationSpy} />
       </Router>
     </ApiContext.Provider>
   )
@@ -42,7 +39,10 @@ const makeSut = (params?: SutParams): SutTypes => {
   }
 }
 
-const simulateValidSubmit = async (email = faker.internet.email(), password = faker.internet.password()): Promise<void> => {
+const simulateValidSubmit = async (
+  email = faker.internet.email(),
+  password = faker.internet.password()
+): Promise<void> => {
   Helper.populateField('email', email)
   Helper.populateField('password', password)
   const form = screen.getByTestId('form')
@@ -141,7 +141,9 @@ describe('Login Component', () => {
   test('Should call SaveAccessToken on success', async () => {
     const { authenticationSpy, setCurrentAccountMock } = makeSut()
     await simulateValidSubmit()
-    expect(setCurrentAccountMock).toHaveBeenCalledWith(authenticationSpy.account)
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(
+      authenticationSpy.account
+    )
     expect(history.length).toBe(1)
     expect(history.location.pathname).toBe('/')
   })

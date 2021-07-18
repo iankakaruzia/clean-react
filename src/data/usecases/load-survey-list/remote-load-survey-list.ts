@@ -3,24 +3,28 @@ import { LoadSurveyList } from '@/domain/usecases/load-survey-list'
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteLoadSurveyList implements LoadSurveyList {
-  constructor (
+  constructor(
     private readonly url: string,
     private readonly httpGetClient: HttpGetClient<RemoteLoadSurveyList.Model[]>
   ) {}
 
-  async loadAll (): Promise<LoadSurveyList.Model[]> {
+  async loadAll(): Promise<LoadSurveyList.Model[]> {
     const httpResponse = await this.httpGetClient.get({ url: this.url })
 
     const remoteSurveys = httpResponse.body || []
 
     switch (httpResponse.statusCode) {
-      case HttpStatusCode.ok: return remoteSurveys.map(remoteSurvey => ({
-        ...remoteSurvey,
-        date: new Date(remoteSurvey.date)
-      }))
-      case HttpStatusCode.noContent: return []
-      case HttpStatusCode.forbidden: throw new AccessDeniedError()
-      default: throw new UnexpectedError()
+      case HttpStatusCode.ok:
+        return remoteSurveys.map((remoteSurvey) => ({
+          ...remoteSurvey,
+          date: new Date(remoteSurvey.date)
+        }))
+      case HttpStatusCode.noContent:
+        return []
+      case HttpStatusCode.forbidden:
+        throw new AccessDeniedError()
+      default:
+        throw new UnexpectedError()
     }
   }
 }

@@ -2,7 +2,10 @@ import faker from 'faker'
 import { CompareFieldsValidation } from './compare-fields-validation'
 import { InvalidFieldError } from '@/validation/errors'
 
-const makeSut = (field: string, fieldToCompare: string): CompareFieldsValidation => {
+const makeSut = (
+  field: string,
+  fieldToCompare: string
+): CompareFieldsValidation => {
   return new CompareFieldsValidation(field, fieldToCompare)
 }
 

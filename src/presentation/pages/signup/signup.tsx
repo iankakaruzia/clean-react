@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import Styles from './signup-styles.scss'
-import { Footer, LoginHeader, Input, FormStatus, SubmitButton } from '@/presentation/components'
+import {
+  Footer,
+  LoginHeader,
+  Input,
+  FormStatus,
+  SubmitButton
+} from '@/presentation/components'
 import { FormContext, ApiContext } from '@/presentation/context'
 import { Validation } from '@/presentation/protocols/validation'
 import { AddAccount } from '@/domain/usecases'
@@ -48,17 +54,23 @@ const Signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
     const { name, email, password, passwordConfirmation } = state
     const formData = { name, email, password, passwordConfirmation }
 
-    setState(oldState => ({
+    setState((oldState) => ({
       ...oldState,
       [`${field}Error`]: validation.validate(field, formData)
     }))
-    setState(oldState => ({
+    setState((oldState) => ({
       ...oldState,
-      isFormInvalid: !!oldState.nameError || !!oldState.emailError || !!oldState.passwordError || !!oldState.passwordConfirmationError
+      isFormInvalid:
+        !!oldState.nameError ||
+        !!oldState.emailError ||
+        !!oldState.passwordError ||
+        !!oldState.passwordConfirmationError
     }))
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault()
     try {
       if (state.isLoading || state.isFormInvalid) {
@@ -88,14 +100,33 @@ const Signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
     <div className={Styles.signupWrap}>
       <LoginHeader />
       <FormContext.Provider value={{ state, setState }}>
-        <form data-testid='form' className={Styles.form} onSubmit={handleSubmit}>
+        <form
+          data-testid='form'
+          className={Styles.form}
+          onSubmit={handleSubmit}
+        >
           <h2>Criar Conta</h2>
-          <Input type="text" name="name" placeholder="Digite seu nome" />
-          <Input type="email" name="email" placeholder="Digite seu email" />
-          <Input type="password" name="password" placeholder="Digite sua senha" />
-          <Input type="password" name="passwordConfirmation" placeholder="Repita sua senha" />
+          <Input type='text' name='name' placeholder='Digite seu nome' />
+          <Input type='email' name='email' placeholder='Digite seu email' />
+          <Input
+            type='password'
+            name='password'
+            placeholder='Digite sua senha'
+          />
+          <Input
+            type='password'
+            name='passwordConfirmation'
+            placeholder='Repita sua senha'
+          />
           <SubmitButton text='Cadastrar' />
-          <Link to='/login' data-testid='login-link' replace className={Styles.link}>Voltar Para Login</Link>
+          <Link
+            to='/login'
+            data-testid='login-link'
+            replace
+            className={Styles.link}
+          >
+            Voltar Para Login
+          </Link>
           <FormStatus />
         </form>
       </FormContext.Provider>

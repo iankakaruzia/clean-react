@@ -1,6 +1,10 @@
 import faker from 'faker'
 import { ValidationBuilder as sut } from './validation-builder'
-import { RequiredFieldValidation, EmailValidation, MinLengthValidation } from '@/validation/validators'
+import {
+  RequiredFieldValidation,
+  EmailValidation,
+  MinLengthValidation
+} from '@/validation/validators'
 import { CompareFieldsValidation } from '../compare-fields/compare-fields-validation'
 
 describe('ValidationBuilder', () => {
@@ -27,7 +31,9 @@ describe('ValidationBuilder', () => {
     const field = faker.database.column()
     const fieldToCompare = faker.database.column()
     const validations = sut.field(field).sameAs(fieldToCompare).build()
-    expect(validations).toEqual([new CompareFieldsValidation(field, fieldToCompare)])
+    expect(validations).toEqual([
+      new CompareFieldsValidation(field, fieldToCompare)
+    ])
   })
 
   test('Should return a list os validations ', () => {

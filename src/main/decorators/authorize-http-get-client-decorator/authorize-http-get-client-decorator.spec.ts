@@ -13,7 +13,10 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const getStorageSpy = new GetStorageSpy()
   const httpGetClientSpy = new HttpGetClientSpy()
-  const sut = new AuthorizeHttpGetClientDecorator(getStorageSpy, httpGetClientSpy)
+  const sut = new AuthorizeHttpGetClientDecorator(
+    getStorageSpy,
+    httpGetClientSpy
+  )
 
   return {
     sut,

@@ -8,8 +8,8 @@ export const mockSurveyModel = (): LoadSurveyList.Model => ({
   date: faker.date.recent()
 })
 
-export const mockSurveyListModel = (): LoadSurveyList.Model[] => ([
+export const mockSurveyListModel = (): LoadSurveyList.Model[] => [
   mockSurveyModel(),
   mockSurveyModel(),
   mockSurveyModel()
-])
+]

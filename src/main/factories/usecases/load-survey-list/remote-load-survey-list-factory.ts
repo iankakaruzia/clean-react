@@ -4,5 +4,8 @@ import { RemoteLoadSurveyList } from '@/data/usecases'
 import { makeAuthorizeHttpGetClientDecorator } from '@/main/factories/decorators'
 
 export const makeRemoteLoadSurveyList = (): LoadSurveyList => {
-  return new RemoteLoadSurveyList(makeApiUrl('/surveys'), makeAuthorizeHttpGetClientDecorator())
+  return new RemoteLoadSurveyList(
+    makeApiUrl('/surveys'),
+    makeAuthorizeHttpGetClientDecorator()
+  )
 }

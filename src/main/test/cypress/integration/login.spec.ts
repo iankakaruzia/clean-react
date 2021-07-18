@@ -4,8 +4,10 @@ import * as Helper from '../utils/helpers'
 import * as Http from '../utils/http-mocks'
 
 const path = /login/
-export const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(path)
-export const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST')
+export const mockInvalidCredentialsError = (): void =>
+  Http.mockUnauthorizedError(path)
+export const mockUnexpectedError = (): void =>
+  Http.mockServerError(path, 'POST')
 export const mockSuccess = (): void => Http.mockOk(path, 'POST', 'fx:account')
 
 const populateFields = (): void => {
@@ -24,11 +26,9 @@ describe('Login', () => {
   })
 
   it('Should load correct initial state', () => {
-    cy.getByTestId('email')
-      .should('have.attr', 'readOnly')
+    cy.getByTestId('email').should('have.attr', 'readOnly')
     FormHelper.testInputStatus('email', 'Campo Obrigatório')
-    cy.getByTestId('password')
-      .should('have.attr', 'readOnly')
+    cy.getByTestId('password').should('have.attr', 'readOnly')
     FormHelper.testInputStatus('password', 'Campo Obrigatório')
     cy.getByTestId('submit').should('have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
@@ -55,7 +55,9 @@ describe('Login', () => {
   it('Should present UnexpectedError on default error cases', () => {
     mockUnexpectedError()
     simulateValidSubmit()
-    FormHelper.testMainError('Algo de errado aconteceu. Tente novamente em breve.')
+    FormHelper.testMainError(
+      'Algo de errado aconteceu. Tente novamente em breve.'
+    )
     Helper.testUrl('/login')
   })
 

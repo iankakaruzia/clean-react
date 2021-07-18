@@ -28,10 +28,7 @@ const makeSut = (params?: SutParams): SutTypes => {
   render(
     <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
       <Router history={history}>
-        <Signup
-          validation={validationStub}
-          addAccount={addAccountSpy}
-        />
+        <Signup validation={validationStub} addAccount={addAccountSpy} />
       </Router>
     </ApiContext.Provider>
   )

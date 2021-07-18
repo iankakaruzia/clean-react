@@ -13,7 +13,7 @@ import { AccountModel } from '@/domain/models'
 class LoadSurveyListSpy implements LoadSurveyList {
   callsCount = 0
   surveys = mockSurveyListModel()
-  async loadAll (): Promise<LoadSurveyList.Model[]> {
+  async loadAll(): Promise<LoadSurveyList.Model[]> {
     this.callsCount++
     return this.surveys
   }
@@ -30,7 +30,12 @@ const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
   const setCurrentAccountMock = jest.fn()
 
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => mockAccountModel() }}>
+    <ApiContext.Provider
+      value={{
+        setCurrentAccount: setCurrentAccountMock,
+        getCurrentAccount: () => mockAccountModel()
+      }}
+    >
       <Router history={history}>
         <SurveyList loadSurveyList={loadSurveyListSpy} />
       </Router>
@@ -84,7 +89,9 @@ describe('SurveyList Component', () => {
 
   test('Should logout on AccessDeniedError', async () => {
     const loadSurveyListSpy = new LoadSurveyListSpy()
-    jest.spyOn(loadSurveyListSpy, 'loadAll').mockRejectedValueOnce(new AccessDeniedError())
+    jest
+      .spyOn(loadSurveyListSpy, 'loadAll')
+      .mockRejectedValueOnce(new AccessDeniedError())
     const { history, setCurrentAccountMock } = makeSut(loadSurveyListSpy)
     await waitFor(() => screen.getByRole('heading', { name: 'Enquetes' }))
 
@@ -94,7 +101,9 @@ describe('SurveyList Component', () => {
 
   test('Should call LoadSurveyList on reload', async () => {
     const loadSurveyListSpy = new LoadSurveyListSpy()
-    jest.spyOn(loadSurveyListSpy, 'loadAll').mockRejectedValueOnce(new UnexpectedError())
+    jest
+      .spyOn(loadSurveyListSpy, 'loadAll')
+      .mockRejectedValueOnce(new UnexpectedError())
     makeSut(loadSurveyListSpy)
     await waitFor(() => screen.getByRole('heading', { name: 'Enquetes' }))
     fireEvent.click(screen.getByTestId('reload'))

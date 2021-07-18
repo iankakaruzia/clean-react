@@ -7,4 +7,5 @@ export const mockAuthenticationParams = (): Authentication.Params => ({
   password: faker.internet.password()
 })
 
-export const mockAuthenticationModel = (): Authentication.Model => mockAccountModel()
+export const mockAuthenticationModel = (): Authentication.Model =>
+  mockAccountModel()
