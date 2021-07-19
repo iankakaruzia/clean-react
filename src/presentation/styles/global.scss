@@ -30,6 +30,8 @@ button {
   text-align: center;
   border-radius: 8px;
   box-shadow: 0px 1px 3px -1px $black;
+  outline: none;
+  transition: opacity .2s;
 
   &:hover {
     opacity: 0.9;

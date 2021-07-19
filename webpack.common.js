@@ -13,7 +13,5 @@ module.exports = {
       '@': path.join(__dirname, 'src')
     }
   },
-  plugins: [
-    new CleanWebpackPlugin()
-  ]
+  plugins: [new CleanWebpackPlugin()]
 }
