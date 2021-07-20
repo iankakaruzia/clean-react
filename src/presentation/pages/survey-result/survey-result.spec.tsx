@@ -4,18 +4,22 @@ import { SurveyResult } from '@/presentation/pages'
 import { ApiContext } from '@/presentation/context'
 import { mockAccountModel } from '@/domain/test'
 
+const makeSut = (): void => {
+  render(
+    <ApiContext.Provider
+      value={{
+        setCurrentAccount: jest.fn(),
+        getCurrentAccount: () => mockAccountModel()
+      }}
+    >
+      <SurveyResult />
+    </ApiContext.Provider>
+  )
+}
+
 describe('SurveyResult Component', () => {
   test('Should presen correct initial state', () => {
-    render(
-      <ApiContext.Provider
-        value={{
-          setCurrentAccount: jest.fn(),
-          getCurrentAccount: () => mockAccountModel()
-        }}
-      >
-        <SurveyResult />
-      </ApiContext.Provider>
-    )
+    makeSut()
 
     const surveyResult = screen.getByTestId('survey-result')
     expect(surveyResult.childElementCount).toBe(0)
