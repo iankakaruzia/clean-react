@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
 import FlipMove from 'react-flip-move'
 
 import { LoadSurveyResult } from '@/domain/usecases'
 import { Calendar } from '@/presentation/components'
 
+import { SurveyResultAnswer } from '@/presentation/pages/survey-result/components'
 import Styles from './result-styles.scss'
 
 type Props = {
@@ -20,30 +21,11 @@ const Result: React.FC<Props> = ({ surveyResult }) => {
         <h2 data-testid='question'>{surveyResult.question}</h2>
       </hgroup>
       <FlipMove data-testid='answers' className={Styles.answersList}>
-        {surveyResult.answers.map((answer) => {
-          const className = answer.isCurrentAccountAnswer ? Styles.active : ''
-          return (
-            <li
-              data-testid='answer-wrap'
-              key={answer.answer}
-              className={className}
-            >
-              {answer.image && (
-                <img
-                  data-testid='image'
-                  src={answer.image}
-                  alt={answer.answer}
-                />
-              )}
-              <span data-testid='answer' className={Styles.answer}>
-                {answer.answer}
-              </span>
-              <span data-testid='percent' className={Styles.percent}>
-                {answer.percent}%
-              </span>
-            </li>
-          )
-        })}
+        {surveyResult.answers.map((answer) => (
+          <Fragment key={answer.answer}>
+            <SurveyResultAnswer answer={answer} />
+          </Fragment>
+        ))}
       </FlipMove>
       <button
         className={Styles.button}
