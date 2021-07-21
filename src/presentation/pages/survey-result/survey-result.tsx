@@ -16,14 +16,19 @@ type Props = {
 }
 
 const SurveyResult: React.FC<Props> = ({ loadSurveyResult }) => {
-  const [state] = useState({
+  const [state, setState] = useState({
     isLoading: false,
     error: '',
     surveyResult: null as LoadSurveyResult.Model
   })
 
   useEffect(() => {
-    loadSurveyResult.load().then().catch()
+    loadSurveyResult
+      .load()
+      .then((surveyResult) =>
+        setState((oldState) => ({ ...oldState, surveyResult }))
+      )
+      .catch()
   }, [])
 
   return (
@@ -33,34 +38,39 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }) => {
         {state.surveyResult && (
           <>
             <hgroup>
-              <Calendar date={new Date()} className={Styles.calendarWrap} />
-              <h2>Qual é seu framework web favorito</h2>
+              <Calendar
+                date={state.surveyResult.date}
+                className={Styles.calendarWrap}
+              />
+              <h2 data-testid='question'>{state.surveyResult.question}</h2>
             </hgroup>
-            <FlipMove className={Styles.answersList}>
-              <li>
-                <img
-                  src='https://fordevs.herokuapp.com/static/img/logo-react.png'
-                  alt='ReactJS'
-                />
-                <span className={Styles.answer}>ReactJS</span>
-                <span className={Styles.percent}>50%</span>
-              </li>
-              <li className={Styles.active}>
-                <img
-                  src='https://fordevs.herokuapp.com/static/img/logo-react.png'
-                  alt='ReactJS'
-                />
-                <span className={Styles.answer}>ReactJS</span>
-                <span className={Styles.percent}>50%</span>
-              </li>
-              <li>
-                <img
-                  src='https://fordevs.herokuapp.com/static/img/logo-react.png'
-                  alt='ReactJS'
-                />
-                <span className={Styles.answer}>ReactJS</span>
-                <span className={Styles.percent}>50%</span>
-              </li>
+            <FlipMove data-testid='answers' className={Styles.answersList}>
+              {state.surveyResult.answers.map((answer) => {
+                const className = answer.isCurrentAccountAnswer
+                  ? Styles.active
+                  : ''
+                return (
+                  <li
+                    data-testid='answer-wrap'
+                    key={answer.answer}
+                    className={className}
+                  >
+                    {answer.image && (
+                      <img
+                        data-testid='image'
+                        src={answer.image}
+                        alt={answer.answer}
+                      />
+                    )}
+                    <span data-testid='answer' className={Styles.answer}>
+                      {answer.answer}
+                    </span>
+                    <span data-testid='percent' className={Styles.percent}>
+                      {answer.percent}%
+                    </span>
+                  </li>
+                )
+              })}
             </FlipMove>
             <button>Voltar</button>
             {state.isLoading && <Loading />}
