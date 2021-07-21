@@ -8,6 +8,7 @@ import {
   Error
 } from '@/presentation/components'
 import { LoadSurveyResult } from '@/domain/usecases'
+import { useErrorHandler } from '@/presentation/hooks'
 
 import Styles from './survey-result-styles.scss'
 
@@ -16,6 +17,14 @@ type Props = {
 }
 
 const SurveyResult: React.FC<Props> = ({ loadSurveyResult }) => {
+  const handleError = useErrorHandler((error: Error) => {
+    setState((oldState) => ({
+      ...oldState,
+      error: error.message,
+      surveyResult: null
+    }))
+  })
+
   const [state, setState] = useState({
     isLoading: false,
     error: '',
@@ -28,7 +37,7 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }) => {
       .then((surveyResult) =>
         setState((oldState) => ({ ...oldState, surveyResult }))
       )
-      .catch()
+      .catch(handleError)
   }, [])
 
   return (
@@ -73,10 +82,10 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }) => {
               })}
             </FlipMove>
             <button>Voltar</button>
-            {state.isLoading && <Loading />}
-            {state.error && <Error error={state.error} reload={() => {}} />}
           </>
         )}
+        {state.isLoading && <Loading />}
+        {state.error && <Error error={state.error} reload={() => {}} />}
       </div>
       <Footer />
     </div>
