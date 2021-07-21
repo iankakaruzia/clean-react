@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import FlipMove from 'react-flip-move'
 import {
   Header,
@@ -40,6 +41,8 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }) => {
       reload: !oldState.reload
     }))
   }
+
+  const { goBack } = useHistory()
 
   useEffect(() => {
     loadSurveyResult
@@ -91,7 +94,9 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }) => {
                 )
               })}
             </FlipMove>
-            <button>Voltar</button>
+            <button data-testid='back-button' onClick={goBack}>
+              Voltar
+            </button>
           </>
         )}
         {state.isLoading && <Loading />}
