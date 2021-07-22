@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
-import FlipMove from 'react-flip-move'
 
 import { LoadSurveyResult } from '@/domain/usecases'
 import { Calendar } from '@/presentation/components'
@@ -20,13 +19,11 @@ const Result: React.FC<Props> = ({ surveyResult }) => {
         <Calendar date={surveyResult.date} className={Styles.calendarWrap} />
         <h2 data-testid='question'>{surveyResult.question}</h2>
       </hgroup>
-      <FlipMove data-testid='answers' className={Styles.answersList}>
+      <ul data-testid='answers' className={Styles.answersList}>
         {surveyResult.answers.map((answer) => (
-          <Fragment key={answer.answer}>
-            <SurveyResultAnswer answer={answer} />
-          </Fragment>
+          <SurveyResultAnswer key={answer.answer} answer={answer} />
         ))}
-      </FlipMove>
+      </ul>
       <button
         className={Styles.button}
         data-testid='back-button'
