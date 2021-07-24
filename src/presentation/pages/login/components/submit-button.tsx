@@ -1,6 +1,6 @@
 import React from 'react'
 import { loginState } from './atoms'
-import { useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 
 import { SubmitButtonBase } from '@/presentation/components'
 
@@ -9,7 +9,7 @@ type Props = {
 }
 
 const SubmitButton: React.FC<Props> = ({ text }) => {
-  const [state] = useRecoilState(loginState)
+  const state = useRecoilValue(loginState)
   return <SubmitButtonBase {...{ text, state }} />
 }
 
