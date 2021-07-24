@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 
 import Styles from './signup-styles.scss'
 import {
@@ -18,9 +18,14 @@ type Props = {
 }
 
 const Signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
+  const resetSignUpState = useResetRecoilState(signUpState)
   const { setCurrentAccount } = useRecoilValue(currentAccountState)
   const history = useHistory()
   const [state, setState] = useRecoilState(signUpState)
+
+  useEffect(() => {
+    resetSignUpState()
+  }, [])
 
   useEffect(() => {
     validate('email')
